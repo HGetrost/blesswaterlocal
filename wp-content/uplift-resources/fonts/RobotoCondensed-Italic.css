@@ -1,0 +1,12 @@
+/* Webfont: RobotoCondensed-Italic */@font-face {
+    font-family: 'RobotoCondensed';
+    src: url('RobotoCondensed-Italic.eot'); /* IE9 Compat Modes */
+    src: url('RobotoCondensed-Italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('RobotoCondensed-Italic.woff') format('woff'), /* Modern Browsers */
+         url('RobotoCondensed-Italic.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('RobotoCondensed-Italic.svg#RobotoCondensed-Italic') format('svg'); /* Legacy iOS */
+    font-style: italic;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

@@ -1,0 +1,264 @@
+<style type="text/css">
+
+	/* GLOBAL STYLES */
+
+	body {
+		background-color: #ccc;
+	}
+
+	fieldset {
+		border: none;
+		padding-bottom: 3px;
+	}
+
+	span {
+		font-family: 'PT Sans', Helvetica, Geneva, sans-serif;;	
+	}
+
+	/* SIGNUP FORM */
+	.uplbtw-signup-form input[type="email"],
+	.uplbtw-signup-form input[type="text"],
+	.uplbtw-signup-form input[type="submit"]
+	{
+		font-family: 'PT Sans', Helvetica, Geneva, sans-serif;;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-o-borer-radius: 5px;
+		border-radius: 5px;
+		-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+		-websit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+		-o-box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+		box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+		border: 0;
+	}
+
+	.uplbtw-signup-form input[type="email"],
+	.uplbtw-signup-form input[type="text"]
+	{
+		font-size: 24px;
+		color: #fff;
+		background: #16222B;
+		padding: 8px 10px;
+		width: 63% !important;
+	}
+
+	.uplbtw-signup-form input[type="submit"]
+	{
+		font-size: 20px;
+		color: #FFF;
+		background: #ff32af; /*#00EAFF */
+		height: 48px;
+		position: relative;
+		top: -2px;
+		width: 35%;
+	}
+
+	.uplbtw-signup-form input[type="checkbox"]
+	{
+		margin: 0 5px 0 0;
+	}
+
+	.uplbtw-signup-form {
+		margin: 0;
+	}
+
+	#uplbtw-signup-form-all {
+		margin-top: 7px;
+	}
+
+	#uplbtw-signup-form-checkboxes {
+		margin-left: calc((100% - 290px)/2);
+	}
+
+	#uplbtw-signup-form-checkboxes span {
+		font-size: 15px;
+		padding: 0;
+	}
+
+	/* Error & Success Messages */
+	.uplbtw-squeeze-mc-success,
+	.uplbtw-squeeze-mc-error {
+	    text-align: center;
+	}
+
+	.uplbtw-squeeze-mc-error {
+	    color: red;
+	}
+
+	#uplbtw-squeeze-success-container {
+	    height: 158px;
+	}
+
+	.uplbtw-squeeze-mc-success {
+	    color: green;
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    -ms-transform:translateY(-50%);
+	    -webkit-transform:translateY(-50%);
+	    -moz-transform:translateY(-50%);
+   		-o-transform:translateY(-50%);
+	    transform:translateY(-50%);
+	    padding: 30px;
+	}
+
+	.uplbtw-squeeze-mc-success strong {
+	    color: green;
+	    font-weight: 900;
+	}
+
+	/* RESPONSIVE VIDEO */
+	.uplbtw-video-responsive,
+	.uplbtw-video-responsive-60 {
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 */
+		height: 0;
+	}
+
+	.uplbtw-video-responsive-60 {
+		padding-bottom: 34%; /* For a 65% width column */ 
+		width: 60%; 
+		margin: 10px 20px;
+	}
+
+	.uplbtw-video-responsive iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+</style>
+
+<script type='text/javascript' src='http://blessthewater.com/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://blessthewater.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://blessthewater.com/wp-includes/js/jquery/jquery.form.min.js?ver=3.37.0'></script>
+<script type='text/javascript' src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js?ver=1.14.0'></script>
+
+<script>
+
+jQuery(function ($) {
+
+   	function outputSignupStatus(mcStatus) {
+
+   		var subscribeSuccess = mcStatus['success'];
+   		var subscribeExists = mcStatus['exists'];
+   		var subscribeUpdate = mcStatus['update'];
+   		var subscribeError = mcStatus['error'];
+   		var subscribeMessage = mcStatus['message'];
+   		var subscribeEmail = mcStatus['email'];
+   		var subscribeRedirectURI = mcStatus['redirectURI'];
+   		var subscribeRedirectPageTitle = mcStatus['redirectPageTitle'];
+   		var subscribeMsgText;
+   		var viewportWidth = window.innerWidth;
+
+   		if (subscribeSuccess == 'true') {
+
+			// Ouput the messsage to the form
+		  	$('.uplbtw-squeeze-mc-error').remove();
+		  	$('[id^=uplbtw-mc-subscribe-]').hide();
+		  	subscribeMsgText = "<div id='uplbtw-squeeze-success-container'><p class='uplbtw-squeeze-mc-success'>" + subscribeMessage + " <strong>Please return to this page on Saturday March 19th at 5:00pm Pacific for Bless The Water and the FREE premier of 'Water is Sacred.'</strong></p></div>";
+		  	$('[id^=uplbtw-email-signup-container]').append(subscribeMsgText);
+		  	$('#wrapper-wyy56b3f8805937a').css({"padding-bottom":"0"});
+		  	$('#wrapper-wp356c69c9903292').css({"padding":"0"});
+
+		  	// Set the cookie
+		  	Cookies.set('uplbtw_regsiter', btoa('subscribed:true;email:' + mcStatus['email']) + ';', { expires: 731 });
+		  	// setTimeout("window.location.href='http://blessthewater.com/" + subscribeRedirectURI + "';", 2000)
+
+		} else {
+
+			$('.uplbtw-squeeze-mc-error').remove();
+
+			if (viewportWidth >= 750) { 
+				$('#uplbtw-signup-form-all').css({"margin-top" : "35px"}) 
+			} else {
+				$('#wrapper-wyy56b3f8805937a').css({"padding-bottom" : "30px"});
+			}
+			
+			subscribeMsgText = "<p class='uplbtw-squeeze-mc-error'>" + subscribeMessage + "</p>";
+			$('#uplbtw-email-signup-container-1').append(subscribeMsgText);
+			$('#uplbtw-email-signup-container-2').append(subscribeMsgText);
+
+	  } // Subscribe Success 
+
+  } // END Formunction outputSignupSattus
+
+  	/*
+  	 * Toggles the submit button on & off for the given form. Also displays / hides the loading gif
+  	 * @param string formNumber
+  	 * @param bool enableFlag)
+   	*/
+   	function toggleButton(formNumber, enableFlag) {
+
+   		if (!enableFlag) {
+
+   			$('#uplbtw-mc-subscribe-' + formNumber + ' img').css('visibility', 'visible');
+   			$('#uplbtw-mc-subscribe-button-' + formNumber)
+   				.attr('disabled', true)
+   				.attr('style', 'background-color: #ccc !important');
+
+   		} else {
+
+   			$('#uplbtw-mc-subscribe-' + formNumber + ' img').css('visibility', 'hidden');
+   			$('#uplbtw-mc-subscribe-button-' + formNumber)
+   				.attr('disabled', false)
+   				.attr('style', 'background-color: #ff32af !important');
+
+   		}
+
+   }
+
+
+	// Form Validation for the top signup form. We cannot combine this into one function as only one of the forms is to be validated, not all of them.
+	$("#uplbtw-mc-subscribe-1").validate({
+
+		ignore: ".email",
+		submitHandler: function(form) {
+			
+			// Grey the submit button ot and show th wait gif
+			toggleButton('1', false);
+			$(form).ajaxSubmit({
+
+				type: 'POST',
+				url: '/wp-content/uplift-resources/mc3-signup/processMCForm.php',
+				dataTyoe: 'json',
+				data: $(form).serialize(), 
+				success: function(data) {
+
+					//alert(data);
+					outputSignupStatus($.parseJSON(data));
+					toggleButton('1', true);
+
+				}  // Success Handler
+
+			});  // AJAX Call
+			
+		} // Submit Handler
+		
+	}); // Form Validate
+
+});
+
+</script>
+
+<div id="uplbtw-email-signup-container-1">
+	<div><iframe width="750" height="421" src="https://www.youtube.com/embed/G6_CnZQ7hZQ?modestbranding=1;autohide=1&showinfo=0;rel=0;" frameborder="0" allowfullscreen></iframe></div>
+	<form id="uplbtw-mc-subscribe-1" name="upllfe-slidein-mc-subscribe" class="uplbtw-signup-form validate" method="post" action="#" target="_blank">
+		<fieldset id="uplbtw-signup-form-all"t> 
+			<input type="email" name="email" placeholder="email address..." class="required email" />
+			<input type="submit" value="Sign up" name="signup" id="uplbtw-mc-subscribe-button-1" class="submit"><br>
+			<fieldset id="uplbtw-signup-form-checkboxes">
+				<input type="checkbox" name="uplift" value="Yes" checked="true" style="margin-left: 3px;">
+				<span>Sign up to UPLIFT</span>
+				<input type="checkbox" name="unify" value="Yes" checked="true" style="margin: 0 7px 0 15px">
+				<span>Sign up to UNIFY</span>
+				<img src="http://dev.upliftconnect.com/wp-content/uploads/2015/12/MnyxU.gif" style="padding-top: 2px; visibility: hidden; width: 20px;" />
+			</fieldset>
+			<input type="hidden" value="Bless" name="list">
+			<input type="hidden" value="bless-the-water-video;The Bless The Water Video" name="redirect">
+		</fieldset>
+	</form>
+</div>
+
